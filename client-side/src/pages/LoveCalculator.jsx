@@ -10,7 +10,7 @@ const LoveCalculator = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/api/save-result', {
+      const response = await axios.post('love-calculator-iwpk3zpyt-avi-s-projects-026567ec.vercel.app/api/save-result', {
         username,
         crushName,
       });
