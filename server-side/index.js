@@ -9,11 +9,22 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(express.json());
 
-// Allowing all origins temporarily for testing (you can refine this later)
+// CORS setup to allow frontend requests
+const allowedOrigins = ['https://love-calculator-frontend.vercel.app']; // Replace with your frontend URL
+
+// CORS setup with OPTIONS handling
 app.use(cors({
-  origin: '*', // Allow all origins for testing (refine later for production)
-  methods: ['GET', 'POST', 'OPTIONS'], // Handle preflight requests
-  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'Accept'] // Allow necessary headers
+  origin: function(origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'OPTIONS'], // Handle GET, POST, and OPTIONS methods
+  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'Accept'], // Allow these headers
+  preflightContinue: false,
+  optionsSuccessStatus: 204 // For legacy browser support
 }));
 
 // MongoDB Connection
