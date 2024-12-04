@@ -9,8 +9,10 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(express.json());
 
-// Allowing only your frontend to make requests
-const allowedOrigins = ['https://love-calculator-frontend.vercel.app']; // Add your frontend URL here
+// Allowing only your frontend to make requests (make sure to update the URL)
+const allowedOrigins = ['https://love-calculator-frontend-qf7kiixup-avi-s-projects-026567ec.vercel.app']; // Update with the correct frontend URL
+
+// CORS setup to allow only the frontend to access the backend
 app.use(cors({
   origin: function(origin, callback) {
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
@@ -18,7 +20,9 @@ app.use(cors({
     } else {
       callback(new Error('Not allowed by CORS'));
     }
-  }
+  },
+  methods: ['GET', 'POST'], // Allow only GET and POST methods (adjust as needed)
+  allowedHeaders: ['Content-Type', 'Authorization'] // Allow headers as needed
 }));
 
 // MongoDB Connection
