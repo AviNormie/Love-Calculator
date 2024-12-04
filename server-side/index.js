@@ -1,19 +1,28 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config();  // To load environment variables from .env file
+require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;  // Use port from .env or default to 5000
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
+
+// Allowing only your frontend to make requests
+const allowedOrigins = ['https://love-calculator-frontend.vercel.app']; // Add your frontend URL here
 app.use(cors({
-  origin: 'https://yourfrontenddomain.vercel.app', // Replace with your frontend URL
+  origin: function(origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
 }));
 
 // MongoDB Connection
-const MONGO_URI = process.env.MONGO_URI;  // Use MongoDB URI from .env
+const MONGO_URI = process.env.MONGO_URI;
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connected to MongoDB"))
   .catch(err => {
@@ -25,7 +34,7 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 const resultSchema = new mongoose.Schema({
   username: String,
   crushName: String,
-  compatibilityScore: Number, // Optional: if you calculate compatibility
+  compatibilityScore: Number,
   date: { type: Date, default: Date.now }
 });
 
