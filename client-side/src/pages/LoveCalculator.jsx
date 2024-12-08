@@ -10,17 +10,17 @@ const LoveCalculator = () => {
     e.preventDefault();
 
     try {
-      // Update API endpoint to the correct backend URL
-      const response = await axios.post('https://love-calculator-ft9qcko9r-avi-s-projects-026567ec.vercel.app/api/save-result', {
+      // Update to the local backend URL
+      const response = await axios.post('http://localhost:5000/api/save-result', {
         username,
         crushName,
       });
-
+  
       setResult(response.data.newResult);
     } catch (error) {
       console.error('Error saving result:', error.response?.data || error.message);
     }
-  };
+  };  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-400 to-red-500 flex items-center justify-center p-4">
