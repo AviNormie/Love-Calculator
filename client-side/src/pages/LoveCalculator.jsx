@@ -11,7 +11,7 @@ const LoveCalculator = () => {
 
     try {
       // Update to the local backend URL
-      const response = await axios.post('http://localhost:5000/api/save-result', {
+      const response = await axios.post('https://love-calculator-sg74.vercel.app/api/save-result', {
         username,
         crushName,
       });
