@@ -24,7 +24,11 @@ const resultSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now }
 });
 const Result = mongoose.model('Result', resultSchema);
-
+app.get("/", (req, res)=>{
+return res.json({
+  message: "teri ma ki chuu"
+})
+})
 // POST route to save result
 app.post('/api/save-result', async (req, res) => {
   const { username, crushName } = req.body;
