@@ -44,4 +44,5 @@ app.post('/api/save-result', async (req, res) => {
 });
 
 // Start the server
+module.exports = app;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
